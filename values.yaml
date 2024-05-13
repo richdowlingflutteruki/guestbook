@@ -1,7 +1,8 @@
 frontend:
-  type: LoadBalancer
-  port: 80
-  targetport: 80
+  type: ClusterIP
+  port: 4000
+  targetport: 8080
+  containerport: 8080
   image: docker.artifactory.euw.platformservices.io/bpe/guestbook-frontend:1.0.2
 redismaster:
   type: ClusterIP

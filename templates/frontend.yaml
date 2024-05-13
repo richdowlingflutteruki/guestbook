@@ -30,7 +30,7 @@ spec:
       - name: guestbook-frontend
         image: {{ .Values.frontend.image }}
         ports:
-        - containerPort: {{ .Values.frontend.port }}
+        - containerPort: {{ .Values.frontend.containerport }}
         env:
         - name: CONFIG_FILE
           value: /config/config.json
