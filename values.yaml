@@ -1,0 +1,13 @@
+frontend:
+  type: LoadBalancer
+  port: 80
+  targetport: 80
+  image: docker.artifactory.euw.platformservices.io/bpe/guestbook-frontend:1.0.2
+redismaster:
+  type: ClusterIP
+  image: docker.artifactory.euw.platformservices.io/redis:3.2.9
+  port: 6379
+redisslave:
+  type: ClusterIP
+  image: docker.artifactory.euw.platformservices.io/redis:3.2.9
+  port: 6379

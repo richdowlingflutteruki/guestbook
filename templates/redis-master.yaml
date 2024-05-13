@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-master
+  template:
+    metadata:
+      labels:
+        app: redis-master
+    spec:
+      containers:
+      - name: redis-master
+        image: {{ .Values.redismaster.image }}
+        ports:
+        - containerPort: {{ .Values.redismaster.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-master
+spec:
+  type: {{ .Values.redismaster.type }}
+  selector:
+    app: redis-master
+  ports:
+  - name: redis
+    protocol: TCP
+    port: {{ .Values.redismaster.port }}
+    targetPort: {{ .Values.redismaster.port }}

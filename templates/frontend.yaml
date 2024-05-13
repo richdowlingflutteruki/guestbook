@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: guestbook-frontend-service
+spec:
+  type: {{ .Values.frontend.type }}
+  selector:
+    app: guestbook-frontend
+  ports:
+  - name: http
+    protocol: TCP
+    port: {{ .Values.frontend.port }}
+    targetPort: {{ .Values.frontend.targetport }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook-frontend-rs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guestbook-frontend
+  template:
+    metadata:
+      labels:
+        app: guestbook-frontend
+    spec:
+      containers:
+      - name: guestbook-frontend
+        image: {{ .Values.frontend.image }}
+        ports:
+        - containerPort: {{ .Values.frontend.port }}
+        env:
+        - name: CONFIG_FILE
+          value: /config/config.json
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
+      volumes:
+      - name: config-volume
+        configMap: 
+          name: frontend-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  config.json: >
+    {
+      "redis_master": "redis-master",
+      "redis_slave": "redis-slave"
+    }
+
