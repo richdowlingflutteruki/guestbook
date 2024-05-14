@@ -19,7 +19,7 @@ spec:
         - containerPort: {{ .Values.redismaster.port }}
         volumeMounts:
         - name: data
-          mountPath: "/data"
+          mountPath: /data
     volumes:
     - name: data
       emptyDir:
