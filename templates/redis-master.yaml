@@ -20,10 +20,10 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
-    volumes:
-    - name: data
-      emptyDir:
-        sizeLimit: 500Mi
+      volumes:
+      - name: data
+        emptyDir:
+          sizeLimit: 500Mi
 ---
 apiVersion: v1
 kind: Service
