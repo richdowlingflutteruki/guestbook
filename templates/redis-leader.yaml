@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-master
+  name: redis-leader
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis-master
+      app: redis-leader
   template:
     metadata:
       labels:
-        app: redis-master
+        app: redis-leader
     spec:
       containers:
-      - name: redis-master
-        image: {{ .Values.redismaster.image }}
+      - name: redis-leader
+        image: {{ .Values.redisleader.image }}
         ports:
-        - containerPort: {{ .Values.redismaster.port }}
+        - containerPort: {{ .Values.redisleader.port }}
         volumeMounts:
         - name: data
           mountPath: /data
@@ -29,14 +29,14 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: redis-master
-  name: redis-master
+    app: redis-leader
+  name: redis-leader
 spec:
-  type: {{ .Values.redismaster.type }}
+  type: {{ .Values.redisleader.type }}
   selector:
-    app: redis-master
+    app: redis-leader
   ports:
   - name: redis
     protocol: TCP
-    port: {{ .Values.redismaster.port }}
-    targetPort: {{ .Values.redismaster.port }}
+    port: {{ .Values.redisleader.port }}
+    targetPort: {{ .Values.redisleader.port }}
