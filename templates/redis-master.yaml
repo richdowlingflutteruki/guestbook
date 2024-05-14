@@ -19,11 +19,11 @@ spec:
         - containerPort: {{ .Values.redismaster.port }}
         volumeMounts:
         - name: data
-          mountPath: /data
-     volumes:
-     - name: data
-       emptyDir:
-         sizeLimit: 500Mi
+          mountPath: "/data"
+    volumes:
+    - name: data
+      emptyDir:
+        sizeLimit: 500Mi
 ---
 apiVersion: v1
 kind: Service
